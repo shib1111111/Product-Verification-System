@@ -6,7 +6,7 @@ export default {
             <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm sticky-top">
                 <div class="container-fluid px-3 px-md-4">
                     <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-                        <i class="bi bi-box-seam text-primary me-2"></i><span class="d-none d-sm-inline">EPVS</span>
+                        <i class="bi bi-box-seam text-primary me-2"></i><span class="d-none d-sm-inline">PVS</span>
                     </a>
                     
                     <div class="d-flex align-items-center text-white ms-auto">

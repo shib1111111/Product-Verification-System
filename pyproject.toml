@@ -1,7 +1,7 @@
 [project]
 name = "product-verification-system"
 version = "0.1.0"
-description = "Enterprise Product Verification System"
+description = "Product Verification System"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
