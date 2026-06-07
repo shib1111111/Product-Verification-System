@@ -18,28 +18,34 @@ router = APIRouter(prefix="/api/validations")
 
 IST = pytz.timezone("Asia/Kolkata")
 
+DATE_FORMATS = [
+    "%d/%m/%Y",
+    "%d.%m.%Y",
+    "%d-%m-%Y",
+    "%Y/%m/%d",
+    "%Y.%m.%d",
+    "%Y-%m-%d",
+]
 
 def normalize_date(date_str):
-    """
-    Convert:
-    10/02/2021
-    10.02.2021
-    10-02-2021
-
-    into
-
-    10-02-2021
-    """
     if not date_str:
         return None
 
-    return re.sub(r"[./]", "-", str(date_str).strip())
+    date_str = str(date_str).strip()
+
+    for fmt in DATE_FORMATS:
+        try:
+            return datetime.strptime(date_str, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+
+    return None
 
 
 @router.post("/analyze")
 async def analyze_product(
     wid: Optional[str] = Form(None),
-    ocr_method: str = Form("paddle"),
+    ocr_method: str = Form("local_ocr"),
     image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
     payload: dict = Depends(
@@ -98,6 +104,7 @@ async def analyze_product(
 
         try:
             result, notes = extract_product_data(
+                ocr_method=ocr_method,
                 image_path=filepath,
                 api_key=settings.gemini_api_key
             )   

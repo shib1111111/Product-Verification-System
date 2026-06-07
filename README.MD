@@ -1,6 +1,6 @@
 # 📦 Product Verification System
 
-> An full-stack web application for warehouse product lifecycle management. Supports bulk CSV ingestion, AI-powered on-floor product verification with OCR, role-based access control, and comprehensive reporting.
+An full-stack web application for warehouse product lifecycle management. Supports bulk CSV ingestion, AI-powered on-floor product verification with OCR, role-based access control, and comprehensive reporting.
 
 ---
 
@@ -8,23 +8,24 @@
 
 1. [Overview](#overview)
 2. [Key Features](#key-features)
-3. [Architecture & Design Decisions](#architecture--design-decisions)
-4. [Technology Stack](#technology-stack)
-5. [Project Structure](#project-structure)
-6. [Data Schema](#data-schema)
-7. [API Reference](#api-reference)
-8. [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
-9. [OCR Pipeline](#ocr-pipeline)
-10. [Prerequisites](#prerequisites)
-11. [Environment Configuration](#environment-configuration)
-12. [Installation & Setup](#installation--setup)
-13. [Running the Application](#running-the-application)
-14. [CSV Format Specification](#csv-format-specification)
-15. [User Guide](#user-guide)
-16. [Scalability & Performance](#scalability--performance)
-17. [Security Considerations](#security-considerations)
-18. [Troubleshooting](#troubleshooting)
-19. [License](#license)
+3. [Application Preview](#application-preview)
+4. [Architecture & Design Decisions](#architecture--design-decisions)
+5. [Technology Stack](#technology-stack)
+6. [Project Structure](#project-structure)
+7. [Data Schema](#data-schema)
+8. [API Reference](#api-reference)
+9. [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
+10. [OCR Pipeline](#ocr-pipeline)
+11. [Prerequisites](#prerequisites)
+12. [Environment Configuration](#environment-configuration)
+13. [Installation & Setup](#installation--setup)
+14. [Running the Application](#running-the-application)
+15. [CSV Format Specification](#csv-format-specification)
+16. [User Guide](#user-guide)
+17. [Scalability & Performance](#scalability--performance)
+18. [Security Considerations](#security-considerations)
+19. [Troubleshooting](#troubleshooting)
+20. [License](#license)
 
 ---
 
@@ -58,6 +59,90 @@ All three personas interact through a single, unified web application with role-
 - **Admin User Management** — Admins can create, view, and delete users; assign any of the three roles (`admin`, `operator`, `qa`).
 - **Role-Based Access Control** — Frontend routing and backend API endpoints are both role-guarded. Unauthorized navigation attempts redirect gracefully.
 - **AI-Powered Date Extraction from Images** — A two-stage OCR pipeline extracts manufacturing and expiry dates from product photos automatically, validating them against the database record.
+
+---
+
+## Application Preview
+
+
+This section provides a visual walkthrough of the Product Verification System and its key workflows.
+
+
+#### 🔐 Login Screen
+
+
+
+The authentication page allows users to securely sign in using their assigned credentials. JWT-based authentication is used for access control and session management.
+
+
+
+![Login Screen](screenshots/login.png)
+
+
+
+#### 📦 Bulk Product Upload
+
+
+
+Administrators can upload large CSV files containing product master data. Uploads are processed asynchronously with progress tracking and cancellation support.
+
+
+
+![Bulk Upload](screenshots/bulk_upload.png)
+
+
+
+#### 🔍 Product Verification using Local OCR
+
+
+
+Operators can validate products by entering/scanning a WID and uploading a product image. The system extracts manufacturing and expiry dates using the local OCR engine and compares them with warehouse records.
+
+
+
+![Local OCR Validation](screenshots/ocr.png)
+
+
+
+
+## 🤖 Product Verification using Gemini AI OCR
+
+
+
+For complex labels where traditional OCR may struggle, the system can leverage Google Gemini Vision to intelligently extract structured product information.
+
+
+
+![Gemini OCR Validation](screenshots/gemini_ocr.png)
+
+
+
+#### 📊 Verification Reports & Analytics
+
+
+
+QA Managers can generate date-range based reports containing validation history, verification outcomes, OCR results, timestamps, and operator activity. Reports can be exported in CSV or PDF format.
+
+
+
+![Reports Dashboard](screenshots/report.png)
+
+
+
+
+
+#### 👥 User Management
+
+
+
+Administrators can create, view, and manage users across different roles (`admin`, `operator`, and `qa`) through the centralized user management interface.
+
+
+
+![User Management](screenshots/user_management.png)
+
+
+
 
 ---
 
@@ -99,23 +184,23 @@ The frontend uses **Vue 3** (CDN), **Vue Router 4** (CDN), and **Pinia** (CDN) l
 
 ### Backend
 
-| Component | Technology | Version |
-|---|---|---|
-| Web Framework | FastAPI | `>=0.111.0` |
-| ASGI Server | Uvicorn | `>=0.30.1` |
-| ORM | SQLAlchemy | `>=2.0.31` |
-| Data Validation | Pydantic v2 | `>=2.13.4` |
-| Settings Management | pydantic-settings | `>=2.3.4` |
-| Authentication | PyJWT + bcrypt | `>=2.8.0` / `>=5.0.0` |
-| CSV Processing | Pandas | `>=2.3.3` |
-| Local OCR | RapidOCR (ONNX Runtime) | `>=1.4.4` |
-| Barcode Detection | OpenCV Contrib | `>=4.13.0.92` |
-| AI Vision (Fallback) | Google Gemini (`genai`) | `>=1.47.0` |
-| PDF Report Generation | fpdf2 | `>=2.8.4` |
-| Image Processing | Pillow | `>=11.3.0` |
-| Timezone Handling | pytz | `>=2026.2` |
-| Async DB Driver | asyncpg | `>=0.31.0` |
-| Package Manager | uv | — |
+| Component | Technology |
+|---|---|
+| Web Framework | FastAPI  |
+| ASGI Server | Uvicorn  |
+| ORM | SQLAlchemy |
+| Data Validation | Pydantic v2 |
+| Settings Management | pydantic-settings  |
+| Authentication | PyJWT + bcrypt |
+| CSV Processing | Pandas |
+| Local OCR | RapidOCR (ONNX Runtime) |
+| Barcode Detection | OpenCV Contrib |
+| AI Vision (Fallback) | Google Gemini (`genai`) |
+| PDF Report Generation | fpdf2 |
+| Image Processing | Pillow |
+| Timezone Handling | pytz |
+| Async DB Driver | asyncpg |
+| Package Manager | uv |
 
 ### Frontend
 
@@ -126,7 +211,6 @@ The frontend uses **Vue 3** (CDN), **Vue Router 4** (CDN), and **Pinia** (CDN) l
 | State Management | Pinia (CDN) |
 | CSS Framework | Bootstrap 5.3 |
 | Icons | Bootstrap Icons 1.11 |
-| Font | Inter (Google Fonts) |
 
 ### Database
 
@@ -446,7 +530,7 @@ DATABASE_URL=sqlite:///./products.db
 # ─── Default Admin Account ─────────────────────────────────
 # Created automatically on first startup if no users exist.
 DEFAULT_ADMIN_USER=admin
-DEFAULT_ADMIN_PASS=admin123
+DEFAULT_ADMIN_PASS=SuperSecureAdmin123!
 
 # ─── AI / OCR ──────────────────────────────────────────────
 GEMINI_API_KEY=your_gemini_api_key_here
@@ -517,6 +601,7 @@ The server starts on **http://127.0.0.1:8000**.
 On first startup, the application will:
 1. Create all database tables automatically (`Base.metadata.create_all`).
 2. Seed a default admin user from `DEFAULT_ADMIN_USER` / `DEFAULT_ADMIN_PASS` in your `.env`.
+or use username as `admin` and password as `SuperSecureAdmin123!` if you haven't changed the .env file. Please change these credentials immediately in a production environment to ensure security.
 3. Create the `uploads/` directory for storing product images.
 
 Log in with your admin credentials to get started.
@@ -696,3 +781,12 @@ This project was built as an end-to-end assignment deliverable. If you are revie
 ---
 
 *Built with FastAPI, Vue 3, SQLAlchemy, RapidOCR, and Google Gemini.*
+
+
+## 📬 Contact
+
+**Developed by Shib Kumar Saraf**
+For enterprise inquiries or contributions, please reach out via GitHub.
+
+📧 **Email:** [shibkumarsaraf05@gmail.com](mailto:shibkumarsaraf05@gmail.com)
+🐙 **GitHub:** [github.com/shib1111111](https://github.com/shib1111111)

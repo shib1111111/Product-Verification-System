@@ -263,6 +263,7 @@ Return ONLY valid JSON.
 # ============================================================
 
 def extract_product_data(
+    ocr_method: str,
     image_path: str,
     api_key: str
 ):
@@ -273,8 +274,13 @@ def extract_product_data(
     2. RapidOCR
     3. Gemini fallback
     """
-
-    result, notes = extract_with_rapidocr(image_path)
+    if ocr_method == "gemini":
+        result, notes = extract_with_gemini(
+            image_path=image_path,
+            api_key=api_key
+        )
+    else:   
+        result, notes = extract_with_rapidocr(image_path)
 
     if result:
 

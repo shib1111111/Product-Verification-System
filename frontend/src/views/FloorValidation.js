@@ -67,6 +67,8 @@ export default {
                                 <div class="col-12 col-md-6 mb-3" v-if="result.ocr_method">
                                     <div class="bg-white bg-opacity-25 rounded-4 p-4 shadow-sm h-100 border border-white border-opacity-25">
                                         <h5 class="fw-bold mb-4"><i class="bi bi-robot me-2"></i>{{ result.ocr_method === 'gemini' ? 'Gemini AI' : 'OCR' }} Extracted Info</h5>
+                                        <p class="mb-3"><span class="text-uppercase fw-bold opacity-75 d-block text-sm">WID</span> <span class="fs-5 fw-semibold">{{ result.extracted_data?.wid || 'Not detected' }}</span></p>
+                                        <p class="mb-3"><span class="text-uppercase fw-bold opacity-75 d-block text-sm">EAN</span> <span class="fs-5 fw-semibold">{{ result.extracted_data?.ean || 'Not detected' }}</span></p>
                                         <p class="mb-3"><span class="text-uppercase fw-bold opacity-75 d-block text-sm">Mfg Date</span> <span class="fs-5 fw-semibold">{{ result.extracted_data?.mfg_date || 'Not detected' }}</span></p>
                                         <p class="mb-0"><span class="text-uppercase fw-bold opacity-75 d-block text-sm">Exp Date</span> <span class="fs-5 fw-semibold">{{ result.extracted_data?.exp_date || 'Not detected' }}</span></p>
                                     </div>
@@ -108,6 +110,7 @@ export default {
             if (image.value) fd.append('image', image.value);
             
             try {
+                // console.log('Submitting for verification with WID:', wid.value, 'OCR Method:', ocrMethod.value, 'Image:', image.value);
                 const res = await apiClient.fetch('/api/validations/analyze', { method: 'POST', body: fd });
                 result.value = res.data;
             } catch (err) { 
