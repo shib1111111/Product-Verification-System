@@ -14,6 +14,14 @@ class User(Base):
     hashed_password = Column(String)
     role = Column(String) # 'admin', 'operator', 'qa'
     is_active = Column(Boolean, default=True)
+    
+class Warehouse(Base):
+    __tablename__= "warehouse"
+    id = Column(Integer, primary_key=True, index=True)
+    warename = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    role = Column(String) # 'admin', 'operator', 'qa'
+    is_active = Column(Boolean, default=True)
 
 class RefreshToken(Base):
     __tablename__ = "refresh_tokens"

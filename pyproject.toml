@@ -25,4 +25,5 @@ dependencies = [
     "rapidocr-onnxruntime>=1.4.4",
     "onnxruntime>=1.20.1",
     "opencv-contrib-python>=4.13.0.92",
+    "psycopg2>=2.9.12",
 ]
